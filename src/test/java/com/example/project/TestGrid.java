@@ -24,7 +24,7 @@ public class TestGrid {
         treasure = new Treasure(2, 2);
         treasure2 = new Treasure(1,7);
         trophy = new Trophy(9, 9);
-
+    
         // Row 0: [ ][ ][ ][ ][ ][ ][ ][ ][ ][W]
         // Row 1: [ ][ ][ ][ ][ ][ ][ ][ ][ ][ ]
         // Row 2: [ ][T][ ][ ][ ][ ][ ][E][ ][ ]
@@ -36,7 +36,7 @@ public class TestGrid {
         // Row 8: [ ][ ][ ][ ][ ][ ][ ][ ][ ][ ]
         // Row 9: [P][ ][ ][ ][ ][ ][ ][ ][ ][ ]
         //         0  1  2  3  4  5  6  7  8  9
-
+    
         // Place objects on the grid
         grid.placeSprite(player);
         grid.placeSprite(enemy);
@@ -44,7 +44,6 @@ public class TestGrid {
         grid.placeSprite(treasure);
         grid.placeSprite(treasure2);
         grid.placeSprite(trophy);
-        
     }
 
     @Test

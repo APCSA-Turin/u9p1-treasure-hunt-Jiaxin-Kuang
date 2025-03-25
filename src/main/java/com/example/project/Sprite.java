@@ -8,20 +8,23 @@ public class Sprite {
         this.y = y;
     }
 
-    public int getX(){return 1;}
-    public int getY(){return 1;}
+    public int getX(){return x;}
+    public int getY(){return y;}
 
-    public void setX(){}
-    public void setY(){}
+    public void setX(int newX){x = newX;}
+    public void setY(int newY){y = newY;}
 
     public String getCoords(){ //returns the coordinates of the sprite ->"(x,y)"
-        return "";
+        return "(" + x + "," + y + ")";
     }
 
     public String getRowCol(int size){ //returns the row and column of the sprite -> "[row][col]"
-        return "[][]";
+        return "[" + (size - y - 1) + "]" + "[" + x + "]";
     }
-    
+
+    public int getRow(int size){
+        return size - y - 1;
+    }
 
     public void move(String direction) { //you can leave this empty
         // Default behavior (can be overridden by subclasses)
@@ -30,7 +33,4 @@ public class Sprite {
     public void interact() { //you can leave this empty
         // Default behavior (can be overridden by subclasses)
     }
-
-
-
 }
