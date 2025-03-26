@@ -10,6 +10,9 @@ public class Game{
     private int size; 
 
     public Game(int size){ //the constructor should call initialize() and play()
+        this.size = size;
+        initialize();
+        play();
     }
 
     public static void clearScreen() { //do not modify
@@ -31,7 +34,6 @@ public class Game{
     public void play(){ //write your game logic here
         Scanner scanner = new Scanner(System.in);
 
-
         while(true){
             try {
                 Thread.sleep(100); // Wait for 1/10 seconds
@@ -39,59 +41,50 @@ public class Game{
                 e.printStackTrace();
             }
             clearScreen(); // Clear the screen at the beggining of the while loop
-
-     
+            grid.display();
+            boolean touchedTrophy = false;
+            System.out.println(player.getCoords());
+            System.out.println(player.getRowCol(size));
+            System.out.println("Treasure Collected: " + player.getTreasureCount());
+            System.out.println("Lives remaining: " + player.getLives());
+            System.out.print("Enter w,a,s,d to move and q to exit: ");
+            String direction = scanner.nextLine();
+            if(player.isValid(size, direction)){
+                player.move(direction);
+                Sprite s = grid.getSprite(player.getRow(size), player.getX());
+                if(s instanceof Trophy){
+                    touchedTrophy = true;
+                }
+                player.interact(size, direction, 2, s);
+                grid.placeSprite(player, direction);
             }
-            
-     
+            if((player.getLives() == 0) || (player.getTreasureCount() < 2 && touchedTrophy)){
+                grid.gameover();
+                break;
+            }
+            if(player.getWin()){
+                grid.win();
+                break;
+            }
+        }
     }
 
     public void initialize(){
+        grid = new Grid(size); 
+        player = new Player(0, 0);
+        enemies = new Enemy[]{new Enemy(5, 5), new Enemy(7, 8)};
+        treasures = new Treasure[]{new Treasure(2, 2), new Treasure(1, 7)};
+        trophy = new Trophy(9, 9);
 
-        //to test, create a player, trophy, grid, treasure, and enemies. Then call placeSprite() to put them on the grid
-        int size = 10;
-        Grid grid = new Grid(size);
-        Player player = new Player(0, 0);
-        Enemy enemy = new Enemy(5, 5);
-        Enemy enemy2 = new Enemy(7,8);
-        Treasure treasure = new Treasure(2, 2);
-        Treasure treasure2 = new Treasure(1,7);
-        Trophy trophy = new Trophy(9, 9);
+        grid.placeSprite(player);
+        grid.placeSprite(enemies[0]);
+        grid.placeSprite(enemies[1]);
+        grid.placeSprite(treasures[0]);
+        grid.placeSprite(treasures[1]);
+        grid.placeSprite(trophy);
     }
 
     public static void main(String[] args) {
-        int size = 10;
-        Grid grid = new Grid(size);
-        Player player = new Player(0, 0);
-        Enemy enemy = new Enemy(5, 5);
-        Enemy enemy2 = new Enemy(7,8);
-        Treasure treasure = new Treasure(2, 2);
-        Treasure treasure2 = new Treasure(1,7);
-        Trophy trophy = new Trophy(9, 9);
-
-        // Row 0: [ ][ ][ ][ ][ ][ ][ ][ ][ ][W]
-        // Row 1: [ ][ ][ ][ ][ ][ ][ ][ ][ ][ ]
-        // Row 2: [ ][T][ ][ ][ ][ ][ ][E][ ][ ]
-        // Row 3: [ ][ ][ ][ ][ ][ ][ ][ ][ ][ ]
-        // Row 4: [ ][ ][ ][ ][ ][E][ ][ ][ ][ ]
-        // Row 5: [ ][ ][ ][ ][ ][ ][ ][ ][ ][ ]
-        // Row 6: [ ][ ][ ][ ][ ][ ][ ][ ][ ][ ]
-        // Row 7: [ ][ ][T][ ][ ][ ][ ][ ][ ][ ]
-        // Row 8: [ ][ ][ ][ ][ ][ ][ ][ ][ ][ ]
-        // Row 9: [P][ ][ ][ ][ ][ ][ ][ ][ ][ ]
-        //         0  1  2  3  4  5  6  7  8  9
-
-        // Place objects on the grid
-        grid.placeSprite(player);
-        grid.placeSprite(enemy);
-        grid.placeSprite(enemy2);
-        grid.placeSprite(treasure);
-        grid.placeSprite(treasure2);
-        grid.placeSprite(trophy);
-        grid.display();
-        System.out.println("--------------------");
-        player.move("w"); 
-        grid.placeSprite(player, "w");
-        grid.display();
+        Game game = new Game(10);
     }
 }

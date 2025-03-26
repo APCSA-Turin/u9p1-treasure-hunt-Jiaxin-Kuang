@@ -59,11 +59,11 @@ public class Player extends Sprite{
         if(obj instanceof Enemy){
             numLives --;
         }
-        else if(!(obj instanceof Trophy) && obj instanceof Treasure){
-            treasureCount ++;
-        }
         else if(obj instanceof Trophy && treasureCount >= numTreasures){
             win = true;
+        }
+        else if(!(obj instanceof Trophy) && obj instanceof Treasure){
+            treasureCount ++;
         }
     }
 

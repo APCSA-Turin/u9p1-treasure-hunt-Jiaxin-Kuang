@@ -7,17 +7,21 @@ public class Grid{
     private int size;
 
     public Grid(int size) { //initialize and create a grid with all DOT objects
+        this.size = size;
         grid = new Sprite[size][size];
         for(int i = 0; i < size; i ++){
             for(int j = 0; j < size; j ++){
                 grid[i][j] = new Dot(i, j);
             }
         }
-        this.size = size;
     }
  
     public Sprite[][] getGrid(){
         return grid;
+    }
+
+    public Sprite getSprite(int y, int x){
+        return grid[y][x];
     }
 
     public void placeSprite(Sprite s){ //place sprite in new spot 
@@ -36,12 +40,10 @@ public class Grid{
         else if(direction.equals("d")){
             reverseX --;
         }
-        else{
+        else if(direction.equals("s")){
             reverseY --;
         }
         placeSprite(s);
-        System.out.println(s.getRow(size) + reverseY);
-        System.out.println(s.getX() + reverseX);
         grid[s.getRow(size) + reverseY][s.getX() + reverseX] = new Dot(s.getRow(size) + reverseY, s.getX() + reverseX);
     }
 
@@ -52,16 +54,16 @@ public class Grid{
                     System.out.print("⬜");
                 }
                 else if(s instanceof Player){
-                    System.out.print("🐱");
+                    System.out.print("🐁");
                 }
                 else if(s instanceof Enemy){
-                    System.out.print("🐶");
+                    System.out.print("🐈");
                 }
                 else if(s instanceof Trophy){
-                    System.out.print("🐭");
+                    System.out.print("🏆");
                 }
                 else{
-                    System.out.print("🐟");
+                    System.out.print("🧀");
                 }
             }
             System.out.println();
@@ -69,10 +71,12 @@ public class Grid{
     }
     
     public void gameover(){ //use this method to display a loss
-        System.out.println("Loss");
+        System.out.println("😽: Thank you for the delicious dinner!");
+        System.out.println("🐭: 😵");
     }
 
     public void win(){ //use this method to display a win
-        System.out.println("Win"); 
+        System.out.println("🐭: Thank you helping me escape the cat!");
+        System.out.println("😿: 😩🍴");
     }
 }
