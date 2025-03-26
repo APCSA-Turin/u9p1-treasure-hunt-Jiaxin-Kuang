@@ -1,42 +1,53 @@
 package com.example.project;
 
-//DO NOT DELETE ANY METHODS BELOW
+//Player is a subclass of Sprite 
 public class Player extends Sprite{
     private int treasureCount;
     private int numLives;
     private boolean win;
 
-    public Player(int x, int y) { //set treasureCount = 0 and numLives = 2 
+    //Constructor initializes a player with x and y variables for their location
+    //Each player is initialized with 2 lives, 0 treasures, and win state currently false 
+    public Player(int x, int y) { 
         super(x,y);
         numLives = 2;
         treasureCount  = 0; 
         win = false;
     }
 
+    //Getter method for treasureCount 
     public int getTreasureCount(){
         return treasureCount;
     }
+
+    //Getter method for numLives
     public int getLives(){
         return numLives;
     }
 
+    //Getter method for win
     public boolean getWin(){
         return win;
     }
 
+    //Overrides Sprite's getCoords() method 
     @Override
-    public String getCoords(){ //returns "Enemy:"+coordinates
+    //returns "Enemy:(x,y)" (X and y match the player's x and y variables)
+    public String getCoords(){ 
         return "Player:" + super.getCoords();
     }
 
+    //Overrides Sprite's getRowCol() method 
     @Override
-    public String getRowCol(int size){ //return "Enemy:"+row col
+    //return "Enemy:[row][col]" (Row and col match the player's equivalent location of their x and y on a 2D array)"
+    public String getRowCol(int size){ 
         return "Player:" + super.getRowCol(size);
     }
 
-    //move method should override parent class, sprite
+    //Overrides Sprite's move method 
     @Override 
-    public void move(String direction) { //move the (x,y) coordinates of the player
+    //Changes the player's x and y cordinates based on keyboard clicks 
+    public void move(String direction) { 
         if(direction.equals("w")){
             super.setY(super.getY() + 1);
         }
@@ -54,8 +65,12 @@ public class Player extends Sprite{
         }
     }
 
-    public void interact(int size, String direction, int numTreasures, Object obj) { // interact with an object in the position you are moving to 
-    //numTreasures is the total treasures at the beginning of the game
+    //Decides if anything happens if a player interacts with the object at their location
+    //Dot: nothing happens
+    //Treasure: treasureCount increases
+    //Enemy: numLives decreases
+    //Trophy: If treasureCount is sufficient, win = true, but if not, player nothing changes and game class will make player lose 
+    public void interact(int size, String direction, int numTreasures, Object obj){ 
         if(obj instanceof Enemy){
             numLives --;
         }
@@ -67,7 +82,8 @@ public class Player extends Sprite{
         }
     }
 
-    public boolean isValid(int size, String direction){ //check grid boundaries
+    //Checks the grid boundaries, making sure player isn't moving off the grid 
+    public boolean isValid(int size, String direction){ 
         if(direction.equals("w") && getY() + 1 < size){
             return true;
         }

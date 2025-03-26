@@ -1,12 +1,12 @@
 package com.example.project;
 
-
-//DO NOT DELETE ANY METHODS BELOW
 public class Grid{
     private Sprite[][] grid;
     private int size;
 
-    public Grid(int size) { //initialize and create a grid with all DOT objects
+    //Constructor accepts size of grid and sets grid to have the same width and length as size 
+    //All items in the grid will be set to dots 
+    public Grid(int size) { 
         this.size = size;
         grid = new Sprite[size][size];
         for(int i = 0; i < size; i ++){
@@ -16,19 +16,23 @@ public class Grid{
         }
     }
  
+    //Getter method for grid 
     public Sprite[][] getGrid(){
         return grid;
     }
 
+    //Gets sprite at a location 
     public Sprite getSprite(int y, int x){
         return grid[y][x];
     }
 
-    public void placeSprite(Sprite s){ //place sprite in new spot 
+    //Places sprite at the location marked by its x and y values 
+    public void placeSprite(Sprite s){ 
         grid[s.getRow(size)][s.getX()] = s;
     }
 
-    public void placeSprite(Sprite s, String direction) { //place sprite in a new spot based on direction
+    //Place player sprite in a new spot based on direction and the old location of the sprite is changed to a dot 
+    public void placeSprite(Sprite s, String direction){ 
         int reverseX = 0;
         int reverseY = 0;
         if(direction.equals("w")){
@@ -47,7 +51,13 @@ public class Grid{
         grid[s.getRow(size) + reverseY][s.getX() + reverseX] = new Dot(s.getRow(size) + reverseY, s.getX() + reverseX);
     }
 
-    public void display() { //print out the current grid to the screen 
+    //Displays the screen by looping through grid and checking which instance class each sprite is 
+    // Empty space: ⬜
+    // Player: 🐁
+    // Enemy: 🐈
+    // Trophy: 🏆
+    // Treasure: 🧀
+    public void display(){
         for(Sprite[] row : grid){
             for(Sprite s : row){
                 if(s instanceof Dot){
@@ -70,12 +80,14 @@ public class Grid{
         }
     }
     
-    public void gameover(){ //use this method to display a loss
+    //Displays dialogue between cat and mouse after a loss
+    public void gameover(){ 
         System.out.println("😽: Thank you for the delicious dinner!");
         System.out.println("🐭: 😵");
     }
 
-    public void win(){ //use this method to display a win
+    //Displays dialogue between cat and mouse after a win
+    public void win(){ 
         System.out.println("🐭: Thank you helping me escape the cat!");
         System.out.println("😿: 😩🍴");
     }
