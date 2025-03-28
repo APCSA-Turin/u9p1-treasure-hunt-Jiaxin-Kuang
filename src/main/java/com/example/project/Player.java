@@ -98,6 +98,23 @@ public class Player extends Sprite{
         }
         return false;
     }
+
+    //Checks if the direction player is moving to is an unmovable dot 
+    public boolean isValid2(int size, String direction, Grid grid){
+        if(direction.equals("w") && !(grid.getSprite(getRow(size) - 1, getX()) instanceof UnmovableDot)){
+            return true;
+        }
+        else if(direction.equals("a") && !(grid.getSprite(getRow(size), getX() - 1) instanceof UnmovableDot)){
+            return true;
+        }
+        else if(direction.equals("s") && !(grid.getSprite(getRow(size) + 1, getX()) instanceof UnmovableDot)){
+            return true;
+        }
+        else if(direction.equals("d") && !(grid.getSprite(getRow(size), getX() + 1) instanceof UnmovableDot)){
+            return true;
+        }
+        return false;
+    }
 }
 
 

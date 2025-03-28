@@ -63,6 +63,9 @@ public class Grid{
                 if(s instanceof Dot){
                     System.out.print("⬜");
                 }
+                else if(s instanceof UnmovableDot){
+                    System.out.print("⬛");
+                }
                 else if(s instanceof Player){
                     System.out.print("🐁");
                 }

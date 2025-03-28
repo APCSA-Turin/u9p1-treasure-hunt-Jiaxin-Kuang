@@ -9,6 +9,7 @@ public class Game{
     private Treasure[] treasures;
     private Trophy trophy;
     private int size; 
+    private UnmovableDot[] unmovableDots;
 
     //Call constructor to initialize the game, setting up the grid, player, enemies, treasures, and trophies
     //Play lets users interact with the game by clicking w,a,s,d,q and clears screen after every update
@@ -54,7 +55,7 @@ public class Game{
             System.out.println("Lives remaining: " + player.getLives()); //Prints lives remaining
             System.out.print("Enter w,a,s,d to move and q to exit: "); //W -> up, a -> left, s -> down, d -> right, q -> quit
             String direction = scanner.nextLine(); //Waiting for player to type and enter their answer 
-            if(player.isValid(size, direction)){ //If direction is valid (i.e. player not going out of boundary or writing anything other than w,a,s,d), player will move direction and any interactions with the Sprite present at the new location will be updated to see if player got a treasure or lost a life to an enemy 
+            if(player.isValid(size, direction) && player.isValid2(size, direction, grid)){ //If direction is valid (i.e. player not going out of boundary or writing anything other than w,a,s,d and not trying to move to an unmovable area), player will move direction and any interactions with the Sprite present at the new location will be updated to see if player got a treasure or lost a life to an enemy 
                 player.move(direction);
                 Sprite s = grid.getSprite(player.getRow(size), player.getX());
                 if(s instanceof Trophy){
@@ -85,7 +86,7 @@ public class Game{
         enemies = new Enemy[]{new Enemy(3, 7), new Enemy(7, 8)};
         treasures = new Treasure[]{new Treasure(4, 2), new Treasure(1, 9)};
         trophy = new Trophy(9, 9); //Trophy starts top right 
-
+        unmovableDots = new UnmovableDot[]{new UnmovableDot(5, 7), new UnmovableDot(7, 8), new UnmovableDot(6, 7), new UnmovableDot(7, 7), new UnmovableDot(3, 4), new UnmovableDot(3, 3), new UnmovableDot(3, 2), new UnmovableDot(8, 2), new UnmovableDot(7, 2), new UnmovableDot(7, 1), new UnmovableDot(2, 9), new UnmovableDot(3, 9)};
         //Places all initialized sprites on the grid 
         grid.placeSprite(player);
         grid.placeSprite(enemies[0]);
@@ -93,6 +94,9 @@ public class Game{
         grid.placeSprite(treasures[0]);
         grid.placeSprite(treasures[1]);
         grid.placeSprite(trophy);
+        for(UnmovableDot dot : unmovableDots){
+            grid.placeSprite(dot);
+        }
     }
 
     public static void main(String[] args) {
