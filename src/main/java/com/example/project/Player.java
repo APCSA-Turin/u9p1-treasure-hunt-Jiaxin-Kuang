@@ -49,16 +49,16 @@ public class Player extends Sprite{
     //Changes the player's x and y cordinates based on keyboard clicks 
     public void move(String direction) { 
         if(direction.equals("w")){
-            super.setY(super.getY() + 1);
+            setY(getY() + 1);
         }
         else if(direction.equals("a")){
-            super.setX(super.getX() - 1);
+            setX(getX() - 1);
         }
         else if(direction.equals("s")){
-            super.setY(super.getY() - 1);
+            setY(getY() - 1);
         }
         else if(direction.equals("d")){
-            super.setX(super.getX() + 1);
+            setX(getX() + 1);
         }
         else{
             System.out.println("Not valid move option");
@@ -99,7 +99,7 @@ public class Player extends Sprite{
         return false;
     }
 
-    //Checks if the direction player is moving to is an unmovable dot 
+    //Checks player didn't move to an unmovable dot 
     public boolean isValid2(int size, String direction, Grid grid){
         if(direction.equals("w") && !(grid.getSprite(getRow(size) - 1, getX()) instanceof UnmovableDot)){
             return true;
@@ -113,7 +113,7 @@ public class Player extends Sprite{
         else if(direction.equals("d") && !(grid.getSprite(getRow(size), getX() + 1) instanceof UnmovableDot)){
             return true;
         }
-        return false;
+            return false;
     }
 }
 

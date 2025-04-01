@@ -53,3 +53,4 @@ public class Sprite {
     public void interact(){ 
     }
 }
+

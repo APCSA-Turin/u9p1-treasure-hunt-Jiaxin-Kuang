@@ -47,8 +47,14 @@ public class Grid{
         else if(direction.equals("s")){
             reverseY --;
         }
-        placeSprite(s);
-        grid[s.getRow(size) + reverseY][s.getX() + reverseX] = new Dot(s.getRow(size) + reverseY, s.getX() + reverseX);
+        if(reverseY == 0 && reverseX == 0){
+            grid[s.getRow(size)][s.getX()] = new Dot(s.getRow(size), s.getX());
+
+        }
+        else{
+            grid[s.getRow(size) + reverseY][s.getX() + reverseX] = new Dot(s.getRow(size) + reverseY, s.getX() + reverseX);
+            placeSprite(s);
+        }
     }
 
     //Displays the screen by looping through grid and checking which instance class each sprite is 

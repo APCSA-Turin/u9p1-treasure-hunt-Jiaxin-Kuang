@@ -53,17 +53,27 @@ public class Game{
             System.out.println(player.getRowCol(size)); //Prints coordinates for 2D array
             System.out.println("Treasure Collected: " + player.getTreasureCount()); //Prints treasure count
             System.out.println("Lives remaining: " + player.getLives()); //Prints lives remaining
-            System.out.print("Enter w,a,s,d to move and q to exit: "); //W -> up, a -> left, s -> down, d -> right, q -> quit
+            System.out.print("Enter w,a,s,d to move and q to exit: "); //w -> up, a -> left, s -> down, d -> right, q -> quit
             String direction = scanner.nextLine(); //Waiting for player to type and enter their answer 
-            if(player.isValid(size, direction) && player.isValid2(size, direction, grid)){ //If direction is valid (i.e. player not going out of boundary or writing anything other than w,a,s,d and not trying to move to an unmovable area), player will move direction and any interactions with the Sprite present at the new location will be updated to see if player got a treasure or lost a life to an enemy 
-                player.move(direction);
+            if(player.isValid(size, direction) && player.isValid2(size, direction, grid)){ //If player didn't go out of bounds or touch an unmovable dot, player will move in their chosen direction
+                player.move(direction); 
                 Sprite s = grid.getSprite(player.getRow(size), player.getX());
                 if(s instanceof Trophy){
                     touchedTrophy = true;
                 }
                 player.interact(size, direction, 2, s); 
                 grid.placeSprite(player, direction); 
-            } 
+                for(Enemy enemy : enemies){ //Each enemy will decide how to move based on player's movement
+                    String enemyDirection = enemy.move(direction, player, grid, size);
+                    grid.placeSprite(enemy, enemyDirection);
+                    if(enemy.getX() == player.getX() && enemy.getY() == player.getY()){ //If enemy touches player, it is set dead so it no longer will move
+                        player.interact(size, direction, 2, enemy);
+                        enemy.setDead(); 
+                        grid.placeSprite(new Dot(enemy.getRow(size), enemy.getX()));
+                        grid.placeSprite(player); 
+                    }
+                }
+            }
             if(direction.equals("q")){ //If direction is q, while loop is exited out of 
                 System.out.println("Play again next time!");
                 break;
@@ -86,7 +96,7 @@ public class Game{
         enemies = new Enemy[]{new Enemy(3, 7), new Enemy(7, 8)};
         treasures = new Treasure[]{new Treasure(4, 2), new Treasure(1, 9)};
         trophy = new Trophy(9, 9); //Trophy starts top right 
-        unmovableDots = new UnmovableDot[]{new UnmovableDot(5, 7), new UnmovableDot(7, 8), new UnmovableDot(6, 7), new UnmovableDot(7, 7), new UnmovableDot(3, 4), new UnmovableDot(3, 3), new UnmovableDot(3, 2), new UnmovableDot(8, 2), new UnmovableDot(7, 2), new UnmovableDot(7, 1), new UnmovableDot(2, 9), new UnmovableDot(3, 9)};
+        unmovableDots = new UnmovableDot[]{new UnmovableDot(5, 7), new UnmovableDot(7, 9), new UnmovableDot(6, 7), new UnmovableDot(7, 7), new UnmovableDot(3, 4), new UnmovableDot(3, 3), new UnmovableDot(3, 2), new UnmovableDot(8, 2), new UnmovableDot(7, 2), new UnmovableDot(7, 1), new UnmovableDot(2, 9), new UnmovableDot(3, 9)};
         //Places all initialized sprites on the grid 
         grid.placeSprite(player);
         grid.placeSprite(enemies[0]);
