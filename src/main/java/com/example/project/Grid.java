@@ -21,6 +21,10 @@ public class Grid{
         return grid;
     }
 
+    public void setGrid(Sprite[][] newGrid){
+        grid = newGrid;
+    }
+
     //Gets sprite at a location 
     public Sprite getSprite(int y, int x){
         return grid[y][x];

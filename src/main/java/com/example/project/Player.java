@@ -99,18 +99,18 @@ public class Player extends Sprite{
         return false;
     }
 
-    //Checks player didn't move to an unmovable dot 
+    //Checks player didn't move to an unmovable dot and didn't move to a trophy when they haven't gotten all their treasures yet
     public boolean isValid2(int size, String direction, Grid grid){
-        if(direction.equals("w") && !(grid.getSprite(getRow(size) - 1, getX()) instanceof UnmovableDot)){
+        if(direction.equals("w") && !(grid.getSprite(getRow(size) - 1, getX()) instanceof UnmovableDot) && !(grid.getSprite(getRow(size) - 1, getX()) instanceof Trophy && getTreasureCount() < 2)){
             return true;
         }
-        else if(direction.equals("a") && !(grid.getSprite(getRow(size), getX() - 1) instanceof UnmovableDot)){
+        else if(direction.equals("a") && !(grid.getSprite(getRow(size), getX() - 1) instanceof UnmovableDot) && !(grid.getSprite(getRow(size), getX() - 1) instanceof Trophy && getTreasureCount() < 2)){
             return true;
         }
-        else if(direction.equals("s") && !(grid.getSprite(getRow(size) + 1, getX()) instanceof UnmovableDot)){
+        else if(direction.equals("s") && !(grid.getSprite(getRow(size) + 1, getX()) instanceof UnmovableDot) && !(grid.getSprite(getRow(size) + 1, getX()) instanceof Trophy && getTreasureCount() < 2)){
             return true;
         }
-        else if(direction.equals("d") && !(grid.getSprite(getRow(size), getX() + 1) instanceof UnmovableDot)){
+        else if(direction.equals("d") && !(grid.getSprite(getRow(size), getX() + 1) instanceof UnmovableDot) && !(grid.getSprite(getRow(size), getX() + 1) instanceof Trophy && getTreasureCount() < 2)){
             return true;
         }
             return false;

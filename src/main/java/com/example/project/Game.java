@@ -78,7 +78,7 @@ public class Game{
                 System.out.println("Play again next time!");
                 break;
             }
-            if((player.getLives() == 0) || (player.getTreasureCount() < 2 && touchedTrophy)){ //Player loses if they lose all their lives or touched trophy before getting all treasures
+            if((player.getLives() == 0)){ //Player loses if they lose all their lives or touched trophy before getting all treasures
                 grid.gameover();
                 break;
             }
