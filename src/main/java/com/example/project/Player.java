@@ -60,9 +60,6 @@ public class Player extends Sprite{
         else if(direction.equals("d")){
             setX(getX() + 1);
         }
-        else{
-            System.out.println("Not valid move option");
-        }
     }
 
     //Decides if anything happens if a player interacts with the object at their location
@@ -99,21 +96,25 @@ public class Player extends Sprite{
         return false;
     }
 
-    //Checks player didn't move to an unmovable dot and didn't move to a trophy when they haven't gotten all their treasures yet
-    public boolean isValid2(int size, String direction, Grid grid){
-        if(direction.equals("w") && !(grid.getSprite(getRow(size) - 1, getX()) instanceof UnmovableDot) && !(grid.getSprite(getRow(size) - 1, getX()) instanceof Trophy && getTreasureCount() < 2)){
-            return true;
+    //Checks player didn't move to an unmovable dot and didn't move to trophy when they haven't gotten all the treasures yet 
+    public boolean isValid2(int size, String direction, Grid grid, int maxTreasures){
+        int newRow = getRow(size);
+        int newCol = getX();
+        
+        if(direction.equals("w")){
+            newRow --;
         }
-        else if(direction.equals("a") && !(grid.getSprite(getRow(size), getX() - 1) instanceof UnmovableDot) && !(grid.getSprite(getRow(size), getX() - 1) instanceof Trophy && getTreasureCount() < 2)){
-            return true;
+        else if(direction.equals("a")){
+            newCol --;
         }
-        else if(direction.equals("s") && !(grid.getSprite(getRow(size) + 1, getX()) instanceof UnmovableDot) && !(grid.getSprite(getRow(size) + 1, getX()) instanceof Trophy && getTreasureCount() < 2)){
-            return true;
+        else if(direction.equals("s")){
+            newRow ++;
         }
-        else if(direction.equals("d") && !(grid.getSprite(getRow(size), getX() + 1) instanceof UnmovableDot) && !(grid.getSprite(getRow(size), getX() + 1) instanceof Trophy && getTreasureCount() < 2)){
-            return true;
+        else{
+            newCol ++;
         }
-            return false;
+
+        return !(grid.getSprite(newRow, newCol) instanceof UnmovableDot) && !(grid.getSprite(newRow, newCol) instanceof Trophy && treasureCount < maxTreasures);
     }
 }
 
