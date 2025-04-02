@@ -12,6 +12,10 @@ public class Enemy extends Sprite{
         isAlive = false;
     }
 
+    public boolean isAlive(){
+        return isAlive;
+    }
+
     //Overrides Sprite's getCoords() method 
     @Override
     //returns "Enemy:(x,y)" (X and y match the enemy's x and y variables)
